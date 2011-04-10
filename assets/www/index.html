@@ -1,45 +1,47 @@
-<!DOCTYPE html> 
-<html> 
-	<head> 
-	<title>News</title> 
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, minimum-scale=1, maximum-scale=1">
+	<title>News</title>
 <!--
-<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.css" />	
-<script src="http://code.jquery.com/jquery-1.5.1.min.js"></script>
-<script src="http://code.jquery.com/mobile/1.0a3/jquery.mobile-1.0a3.min.js"></script>-->
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.css" />
+<script src="http://code.jquery.com/jquery-1.4.4.min.js"></script>
+<script src="http://code.jquery.com/mobile/1.0a2/jquery.mobile-1.0a2.min.js"></script>-->
 
-<link rel="stylesheet" href="css-js/jquery.mobile-1.0a3.min.css" />	
-<script src="css-js/jquery-1.5.1.min.js"></script>
-<script src="css-js/jquery.mobile-1.0a3.min.js"></script>
-<script src="css-js/jquery.ba-dotimeout.js"></script> 
-<script src="css-js/jquery.dst.js"></script> 
+<link rel="stylesheet" href="css-js/jquery.mobile-1.0a2.min.css" />
+<script src="css-js/jquery-1.4.4.min.js"></script>
+<script src="css-js/jquery.mobile-1.0a2.min.js"></script>
+<script src="css-js/jquery.ba-dotimeout.js"></script>
+<script src="css-js/jquery.dst.js"></script>
 
 
-</head> 
-<body> 
+</head>
+<body>
 
 <!-- Container page -->
 <div data-role="page" data-theme="b" id="containerPage">
 
-<!-- Categories -->
-<div data-role="header" id="hdrCategories" data-nobackbtn="true">
- <h1>Categories</h1>
- <a id="buttonAddCategory" data-icon="plus" class="ui-btn-left" href="" 
-     data-role="button" data-inline="true">Add</a>
-</div>
-<div data-role="content" id="contentCategories">
-<ul data-role="listview" data-split-icon="delete" data-split-theme="d"  id="currentNews"></ul>
-</div>
-<div data-role="footer" id="ftrCategories"></div>
+
+	<!-- Categories -->
+	<div data-role="header" id="hdrCategories" data-nobackbtn="true">
+		<h1>Categories</h1>
+		<a id="buttonAddCategory" data-icon="plus" class="ui-btn-left" href="" data-role="button" data-inline="true">Add</a>
+	</div>
+	<div data-role="content" id="contentCategories">
+		<ul data-role="listview" data-split-icon="delete" data-split-theme="d"  id="currentNews"></ul>
+	</div>
+	<div data-role="footer" id="ftrCategories"></div>
 
 
-<!-- Category Selection -->
-<div data-role="header" id="hdrSelect" data-nobackbtn="true">
-<h1>Select</h1>
-</div>
-<div data-role="content" id="contentSelect">
-	<form id="form1">
-		<div id="categoryDiv" data-role="fieldcontain">  		
-			<select id="category" tabindex="2">
+	<!-- Category Selection -->
+	<div data-role="header" id="hdrSelect" data-nobackbtn="true">
+		<h1>Select</h1>
+	</div>
+	<div data-role="content" id="contentSelect">
+		<form id="form1">
+			<div id="categoryDiv" data-role="fieldcontain">
+			  <select id="category" tabindex="2">
 				<option value=''>Select a Category</option>
 				<option value='topstories'>Top Stories</option>
 				<option value='us'>U.S.</option>
@@ -49,289 +51,300 @@
 				<option value='stocks'>Stocks</option>
 				<option value='economy'>U.S. Economy</option>
 				<option value='eurobiz'>European Economy</option>
-			</select>
-		</div>
-		<a id="buttonGetCategory" href="" data-role="button" data-inline="true">Get Category</a>
-	</form>	
-</div>
-<div data-role="footer" id="ftrSelect"></div>
+				</select>
+			</div>
+			<a id="buttonGetCategory" href="" data-role="button" data-inline="true">Get Category</a>
+		</form>
+	</div>
+	<div data-role="footer" id="ftrSelect"></div>
 
 
 
-<!--  Progress -->
-<div data-role="header" id="hdrProgress" data-nobackbtn="true">
-	<h1>Processing...</h1>
-</div>
-<div data-role="content" id="contentProgress">
-	<div align="CENTER"><h4>Please wait.</h4></div>
-	<div align="CENTER"><img id="spin" src="img/wait.gif"/></div>	
-</div>
-<div data-role="footer" id="ftrProgress"></div>
+	<!--  Progress -->
+	<div data-role="header" id="hdrProgress" data-nobackbtn="true">
+		<h1>Processing...</h1>
+	</div>
 
-<!-- News -->
-<div data-role="header" id="hdrNews" data-nobackbtn="true">
-</div>
+	<div data-role="content" id="contentProgress">
+		<div align="CENTER"><h4>Please wait.</h4></div>
+		<div align="CENTER"><img id="spin" src="img/wait.gif"/></div>
+	</div>
 
-<div data-role="content" id="contentNews"></div>
+	<div data-role="footer" id="ftrProgress"></div>
 
-<div data-role="footer" id="ftrNews">
-</div>
+	<!-- News -->
+	<div data-role="header" id="hdrNews" data-nobackbtn="true">
+		<h1>News</h1>
+		<a id="buttonHdrShowCategories" data-icon="arrow-l" class="ui-btn-left" href="" data-role="button" data-inline="true">Back</a>
+	</div>
 
+	<div data-role="content" id="contentNews"></div>
 
-<script>
-// constants	  
-var COOKIE_NAME = 'news';
-var COMMA = ',';
-var EMPTY = '';
-var REFRESH = 'refresh';
-var LI = 'li';
-var PAR = 'p';
-var ID = 'id';
-var ITEM = 'item';
-var TITLE = 'title';
-var CATEGORY = 'category';
-var DESCR = 'description';
-var CAT_ = 'cat_';
-var _D = '_d';
-var _LI = '_li';
-var _A = '_a';
-var GET = 'GET';
-var XML = 'xml';
-var HTML_FRG1 = '<li id="';
-var HTML_FRG2 = '"><h3><a id="';
-var HTML_FRG3 = '"  href="#">';
-var HTML_FRG4 = '</a></h3><p id="';
-var HTML_FRG5 = '"></p><a href="#" data-transition="slideup" id="';
-var HTML_FRG6 = '"/></li>';
-var HTML_FRG7 = '<p>';
-var HTML_FRG8 = '</p><hr></hr>';	  
-var NEWS_URI = 'http://rss.news.yahoo.com/rss/';
-var TWO_SECONDS = 2000;
+	<div data-role="footer" id="ftrNews">
+  		<a id="buttonFtrShowCategories" data-icon="arrow-l" class="ui-btn-left" href="" data-role="button" data-inline="true">Back to News Categories</a>
+	</div>
 
-// Variables
-var hdrCategoriesVar = $('#hdrCategories');
-var contentCategoriesVar = $('#contentCategories');
-var ftrCategoriesVar = $('#ftrCategories');
+	<script>
+	 // constants
+	  var COOKIE_NAME = 'news';
+	  var COMMA = ',';
+	  var EMPTY = '';
+	  var REFRESH = 'refresh';
+	  var LI = 'li';
+	  var PAR = 'p';
+	  var ID = 'id';
+	  var ITEM = 'item';
+	  var TITLE = 'title';
+	  var CATEGORY = 'category';
+	  var DESCR = 'description';
+	  var CAT_ = 'cat_';
+	  var _D = '_d';
+	  var _LI = '_li';
+	  var _A = '_a';
+	  var GET = 'GET';
+	  var XML = 'xml';
+	  var HTML_FRG1 = '<li id="';
+	  var HTML_FRG2 = '"><h3><a id="';
+	  var HTML_FRG3 = '"  href="#">';
+	  var HTML_FRG4 = '</a></h3><p id="';
+	  var HTML_FRG5 = '"></p><a href="#" data-transition="slideup" id="';
+	  var HTML_FRG6 = '"/></li>';
+	  var HTML_FRG7 = '<p>';
+	  var HTML_FRG8 = '</p><hr></hr>';
+	  var NEWS_URI = 'http://rss.news.yahoo.com/rss/';
+	  var TWO_SECONDS = 2000;
 
-var hdrSelectVar = $('#hdrSelect');
-var contentSelectVar = $('#contentSelect');
-var ftrSelectVar = $('#ftrSelect');
+	  // Variables
+	  var hdrCategoriesVar = $('#hdrCategories');
+	  var contentCategoriesVar = $('#contentCategories');
+	  var ftrCategoriesVar = $('#ftrCategories');
+	  var hdrSelectVar = $('#hdrSelect');
+	  var contentSelectVar = $('#contentSelect');
+	  var ftrSelectVar = $('#ftrSelect');
+	  var hdrProgressVar = $('#hdrProgress');
+	  var contentProgressVar = $('#contentProgress');
+	  var ftrProgressVar = $('#ftrProgress');
+	  var hdrNewsVar = $('#hdrNews');
+	  var contentNewsVar = $('#contentNews');
+	  var ftrNewsVar = $('#ftrNews');
+	  var currentNewsVar = $('#currentNews');
+	  var buttonFtrShowCategoriesVar = $('#buttonFtrShowCategories');
+	  var buttonHdrShowCategoriesVar = $('#buttonHdrShowCategories');
+	  var buttonGetCategoryVar = $('#buttonGetCategory');
+	  var buttonAddCategoryVar = $('#buttonAddCategory');
+	  var categoryVar = $('#category');
 
-var hdrProgressVar = $('#hdrProgress');
-var contentProgressVar = $('#contentProgress');
-var ftrProgressVar = $('#ftrProgress');
+	  var numNewsToRestore= 0;
+	  var numLi = 0;
+	  var storedNewsArr;
 
-var hdrNewsVar = $('#hdrNews');
-var contentNewsVar = $('#contentNews');
-var ftrNewsVar = $('#ftrNews');
-var currentNewsVar = $('#currentNews');
+	$(document).ready(function () {
+     showProgress();
+     var storedNewsTxt = $.DSt.get(COOKIE_NAME);
 
-var buttonFtrShowCategoriesVar = $('#buttonFtrShowCategories');
-var buttonHdrShowCategoriesVar = $('#buttonHdrShowCategories');
-var buttonGetCategoryVar = $('#buttonGetCategory');
-var buttonAddCategoryVar = $('#buttonAddCategory');
-var categoryVar = $('#category');
+     if(storedNewsTxt != null && storedNewsTxt.length > 0){
+      storedNewsArr = storedNewsTxt.split(COMMA);
+     }else{
+      storedNewsArr = new Array();
+     }
+     numNewsToRestore = storedNewsArr.length;
+     restore();
+	  });
 
-var numNewsToRestore= 0;
-var numLi = 0;
-var storedNewsArr;
+	 function restore(){
+    if(numNewsToRestore > 0){
+      getNews(storedNewsArr[--numNewsToRestore],restoreNews);
+    }else{
+     showCategories();
+    }
+   }
 
-/*  General functions */
- 
- 
-    /* When a page is loaded in the browser, we get the stored news 
-       categories and process them on after another to create a  list
-       for each news category 
-    */
-	$(document).ready(function () {   	   
-                         showProgress();
-                         var storedNewsTxt = $.DSt.get(COOKIE_NAME); 
-     
-                         if(storedNewsTxt != null && storedNewsTxt.length > 0){
-                            storedNewsArr = storedNewsTxt.split(COMMA);
-                         }else{
-                            storedNewsArr = new Array();
-                         }      
-                         numNewsToRestore = storedNewsArr.length;     
-                         restore();
-	                  }); 
-	       
-    /*  We parse the stored categoies and create a string where
-        each element corresponds to a category
-    */
-	function restore(){	  
-		if(numNewsToRestore > 0){
-		    getNews(storedNewsArr[--numNewsToRestore],restoreNews);
-		}else{
-			showCategories();  
-		} 
-	}
-    
-    /*  Constructs the URL for the news category and performs a jQuery ajax()
-        call to the URL passing a function pointer to handle the response.
-    */
-	function getNews(varCat,handler){
-		var varURI = NEWS_URI + varCat;
-	      
-		$.ajax({type: GET, dataType: XML, url: varURI, success: handler});
-	    return false; 
-	}
-    
-    /* a handler fto the AJAX call.  It simply forwards the XML response to another 
-       function.  */
-	function restoreNews(xml){
-	    populateSingleNews(xml);
-	    restore();
-	}
-    
-    /*  The argument sent is XML text sent from Yahoo! News as a response to the AJAX query
-        for news items regarding a particular news category.  To create the content,
-        we need only a portion of the XML response.  The function will parse the xml and
-        add to the list currentNews.  The news category will be animated by fading in and
-        out one headline ata time.*/
-	function populateSingleNews(xml){ 
-          // Using the jQuery find(), first(), and text functions to prse category and 
-          // description elements from the XML.  Afterwards
-	      var tmpTxt = $(xml).find(CATEGORY).first().text();
-	      var desc = $(xml).find(DESCR).first().text();
-	      
-	      var category = CAT_ + tmpTxt;
-	      var categoryDel = category + _D;
-	      var categoryLi = categoryDel + _LI;
-	      var categoryA = category + _A;
-
-	      // Using the jQuery DOM manipulation method prependTo() to add this list to the currentNews list.
-	      $(HTML_FRG1 + categoryLi + HTML_FRG2 + categoryA + HTML_FRG3 + desc + HTML_FRG4 + category + HTML_FRG5 + categoryDel + HTML_FRG6).prependTo(currentNewsVar);
-	      
-	      
-	      var newDeleteItem = document.getElementById(categoryDel);
-	      $(newDeleteItem).click(function() {
-		    $.doTimeout( categoryLi, false );
-	        var newListItem = document.getElementById(categoryLi);  
-	        $(newListItem).remove();
-	         storeCurrentNews();
-	      });
-	      
-	      var newDescItem = document.getElementById(categoryA);      
-	      $(newDescItem).click(function() {
-		  	showProgress();
-	        getNews(category.substring(4),populateNewsItems); 
-	      });
-		  
-		  var ind = 0;
-		  var newsArray = new Array();
-	      $(xml).find(ITEM).each(function(){
-	          var txt = $(this).find(TITLE).text();
-	          newsArray[ind++] = txt;                   
-	      }); 
-		  
-		  var newItem = document.getElementById(category);
-	      $(newItem).text(newsArray[0]);
-
-	      currentNewsVar.listview(REFRESH); 
-	      animate(newsArray,$(newItem),categoryLi);
-	   }
-    
-    
-	 function animate(pArr,animationTarget,handle){
-	      var len = pArr.length;
-	      var currInd = 1;
-	      animationTarget.doTimeout(handle,TWO_SECONDS, function(){
-	        this.fadeOut(function(){
-	          currInd = currInd % len;
-	          animationTarget.text(pArr[currInd++]);
-	          animationTarget.fadeIn();            
-	          });  
-	        return true;
-	      });        
-	  }
-    
-	 
-	 
-	 function populateNewsItems(xml){
-	      var tmpTxt = EMPTY;
-	      $(xml).find(ITEM).each(function(){
-	          var txt = $(this).find(DESCR).text();
-	          tmpTxt = tmpTxt + HTML_FRG7 + txt + HTML_FRG8;                   
-	      }); 
-	      
-	      contentNewsVar.html(tmpTxt);
-	      showNews();
-	 }
-    
-    
-
-/* Category functions*/
-function hideCategories(){
+   function hideCategories(){
 	hdrCategoriesVar.hide();
 	contentCategoriesVar.hide();
-	ftrCategoriesVar.hide();      
-}
+	ftrCategoriesVar.hide();
+   }
 
+   function hideSelect(){
+	hdrSelectVar.hide();
+	contentSelectVar.hide();
+	ftrSelectVar.hide();
+   }
 
-
-function showCategories(){
+  function showCategories(){
   	hideSelect();
     hideProgress();
     hideNews();
     hdrCategoriesVar.show();
     contentCategoriesVar.show();
-    ftrCategoriesVar.show();      
-}
+    ftrCategoriesVar.show();
+   }
 
-/*Selection functions */
-function hideSelect(){
-	hdrSelectVar.hide();
-	contentSelectVar.hide();
-	ftrSelectVar.hide();      
-}
-
-function showSelect(){
+   function showSelect(){
    	hideCategories();
     hideProgress();
     hideNews();
     hdrSelectVar.show();
     contentSelectVar.show();
-    ftrSelectVar.show();      
-}
+    ftrSelectVar.show();
+   }
 
-/* Progress functions */
-function hideProgress(){
-	hdrProgressVar.hide();
-	contentProgressVar.hide();
-	ftrProgressVar.hide();
-}
-
-function showProgress(){
+   function showProgress(){
    	hideCategories();
     hideSelect();
     hideNews();
     hdrProgressVar.show();
     contentProgressVar.show();
     ftrProgressVar.show();
-}
+   }
 
-/* News functions */
-function hideNews(){
-	hdrNewsVar.hide();
-	contentNewsVar.hide();
-	ftrNewsVar.hide();
-}
+   function hideProgress(){
+	hdrProgressVar.hide();
+	contentProgressVar.hide();
+	ftrProgressVar.hide();
+   }
 
-function showNews(){
+   function showNews(){
     hideCategories();
     hideSelect();
     hideProgress();
     hdrNewsVar.show();
     contentNewsVar.show();
     ftrNewsVar.show();
-}
+   }
 
-</script>
+   function hideNews(){
+	hdrNewsVar.hide();
+	contentNewsVar.hide();
+	ftrNewsVar.hide();
+   }
+
+    function animate(pArr,animationTarget,handle){
+      var len = pArr.length;
+      var currInd = 1;
+      animationTarget.doTimeout(handle,TWO_SECONDS, function(){
+        this.fadeOut(function(){
+          currInd = currInd % len;
+          animationTarget.text(pArr[currInd++]);
+          animationTarget.fadeIn();
+          });
+        return true;
+      });
+    }
+
+    function storeCurrentNews(){
+      $.DSt.set(COOKIE_NAME, EMPTY);
+      var tmp = EMPTY;
+      currentNewsVar.find(LI).each(function(){
+        tmp = tmp + COMMA + $(this).find(PAR).attr(ID).substring(4);
+      });
+
+      $.DSt.set(COOKIE_NAME, tmp.substring(1));
+    }
+
+    function getNews(varCat,handler){
+      var varURI = NEWS_URI + varCat;
+
+	  $.ajax({type: GET, dataType: XML, url: varURI, success: handler});
+      return false;
+    }
+
+    function populateNewsItems(xml){
+      var tmpTxt = EMPTY;
+      $(xml).find(ITEM).each(function(){
+          var txt = $(this).find(DESCR).text();
+          tmpTxt = tmpTxt + HTML_FRG7 + txt + HTML_FRG8;
+      });
+
+      contentNewsVar.html(tmpTxt);
+      showNews();
+    }
+
+    function populateSingleNews(xml){
+      var tmpTxt = $(xml).find(CATEGORY).first().text();
+      var desc = $(xml).find(DESCR).first().text();
+      var category = CAT_ + tmpTxt;
+      var categoryDel = category + _D;
+      var categoryLi = categoryDel + _LI;
+      var categoryA = category + _A;
+
+      $(HTML_FRG1 + categoryLi + HTML_FRG2 + categoryA + HTML_FRG3 + desc + HTML_FRG4 + category + HTML_FRG5 + categoryDel + HTML_FRG6).prependTo(currentNewsVar);
+
+      var newDeleteItem = document.getElementById(categoryDel);
+      $(newDeleteItem).click(function() {
+	    $.doTimeout( categoryLi, false );
+        var newListItem = document.getElementById(categoryLi);
+        $(newListItem).remove();
+         storeCurrentNews();
+      });
+
+      var newDescItem = document.getElementById(categoryA);
+      $(newDescItem).click(function() {
+	  	showProgress();
+        getNews(category.substring(4),populateNewsItems);
+      });
+
+	  var ind = 0;
+	  var newsArray = new Array();
+      $(xml).find(ITEM).each(function(){
+          var txt = $(this).find(TITLE).text();
+          newsArray[ind++] = txt;
+      });
+
+	  var newItem = document.getElementById(category);
+      $(newItem).text(newsArray[0]);
+
+      currentNewsVar.listview(REFRESH);
+      animate(newsArray,$(newItem),categoryLi);
+   }
+
+   function restoreNews(xml){
+    populateSingleNews(xml);
+    restore();
+   }
+
+   function addNews(xml){
+    populateSingleNews(xml);
+    storeCurrentNews();
+    showCategories();
+   }
+
+   function changeLocation(varURI){
+   	showProgress();
+	$.get(EMPTY,function(data){
+		window.location = varURI;
+	});
+   }
 
 
+   buttonAddCategoryVar.click(function() {
+      showSelect();
+      return false;
+    });
 
+    buttonGetCategoryVar.click(function() {
+      if(categoryVar.val() != EMPTY){
+	  	showProgress();
+        return getNews(categoryVar.val(),addNews);
+      }else{
+        showCategories();
+        return false;
+      }
+    });
+
+    buttonHdrShowCategoriesVar.click(function() {
+      showCategories();
+      return false;
+    });
+
+    buttonFtrShowCategoriesVar.click(function() {
+      showCategories();
+      return false;
+    });
+  </script>
 </div> <!-- containerPage -->
+
+
 <!-- Page ends here -->
 </body>
 </html>
