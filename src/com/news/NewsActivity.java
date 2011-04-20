@@ -7,6 +7,7 @@ import android.view.KeyEvent;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
+
 public class NewsActivity extends Activity {
 
 	WebView mWebView;
@@ -50,4 +51,5 @@ public class NewsActivity extends Activity {
 			return true;
 		}
 	}
+	
 }

@@ -39,9 +39,9 @@
 		<h1>Select</h1>
 	</div>
 	<div data-role="content" id="contentSelect">
-		<form id="form1">
-			<div id="categoryDiv" data-role="fieldcontain">
-			  <select id="category" tabindex="2">
+		<form id="form1" action='' method="post">
+			<div id="categoryDiv" data-role="fieldcontain" class="select" data-theme="b">
+			  <select id="categorySelect" tabindex="2">
 				<option value=''>Select a Category</option>
 				<option value='topstories'>Top Stories</option>
 				<option value='us'>U.S.</option>
@@ -132,7 +132,7 @@
 	  var buttonHdrShowCategoriesVar = $('#buttonHdrShowCategories');
 	  var buttonGetCategoryVar = $('#buttonGetCategory');
 	  var buttonAddCategoryVar = $('#buttonAddCategory');
-	  var categoryVar = $('#category');
+	  var categorySelectVar = $('#categorySelect');
 
 	  var numNewsToRestore= 0;
 	  var numLi = 0;
@@ -140,6 +140,7 @@
 
 	$(document).ready(function () {
      showProgress();
+     //Getting whatever is stored within localstorage
      var storedNewsTxt = $.DSt.get(COOKIE_NAME);
 
      if(storedNewsTxt != null && storedNewsTxt.length > 0){
@@ -158,7 +159,8 @@
      showCategories();
     }
    }
-
+   
+   
    function hideCategories(){
 	hdrCategoriesVar.hide();
 	contentCategoriesVar.hide();
@@ -323,9 +325,9 @@
     });
 
     buttonGetCategoryVar.click(function() {
-      if(categoryVar.val() != EMPTY){
+      if(categorySelectVar.val() != EMPTY){
 	  	showProgress();
-        return getNews(categoryVar.val(),addNews);
+        return getNews(categorySelectVar.val(),addNews);
       }else{
         showCategories();
         return false;
